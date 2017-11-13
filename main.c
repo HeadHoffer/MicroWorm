@@ -61,6 +61,7 @@ int main(void)
 	
 	int aStartValue = 20;
 	int bStartValue = aStartValue + 10;
+	int speed = 10;
 
 	//PrintSquare(aStartValue, bStartValue);
 	//PrintCircle(40,40,12);
