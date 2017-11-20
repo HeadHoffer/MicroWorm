@@ -30,6 +30,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "lcd.h"
+#include <stdbool.h>
 
 //Portteihin kytketyt laitteet
 #define Switch PIND
@@ -41,11 +42,9 @@
 
 
 
-typedef int bool;
-#define true 1
-#define false 0
 
 int main(void)
+
 {
 	DDRD &= ~((1<<SW1)|(1<<SW2)|(1<<SW3)|(1<<SW4)|(1<<SW5));
 
@@ -57,7 +56,7 @@ int main(void)
 
 	lcd_clear();
 
-	int speed = 10;
+	
 	int x = 20;
 	int y = 20;
 
@@ -72,10 +71,38 @@ int main(void)
 			up = true;
 			down = left = right = false;
 		}
+		if(~Switch & (1<<SW1))
+		{
+			left = true;
+			down = up = right = false;
+		}
+		if(~Switch & (1<<SW3))
+		{
+			right = true;
+			down = left = up = false;
+		}
+		if(~Switch & (1<<SW2))
+		{
+			down = true;
+			up = left = right = false;
+		}
 		if(up)
 		{
-			Move(coords[1], 1);
+			Move(&coords[1], 1);
 		}
+		if(down)
+		{
+			Move(&coords[1], -1);
+		}
+		if(left)
+		{
+			Move(&coords[0], 1);
+		}
+		if(right)
+		{
+			Move(&coords[0], -1);
+		}
+		
 		PrintPixel(coords[0],coords[1]);
 	}
 }
@@ -86,25 +113,11 @@ void PrintPixel(int x, int y)
 	lcd_pixel(x,y);
 }
 
-void Move(int coord, int moveValue)
+void Move(int *coord, int moveValue)
 {
-	coord += moveValue;
+	*coord += moveValue;
 }
 
-void MoveDown()
-{
-
-}
-
-void MoveLeft()
-{
-
-}
-
-void MoveRight()
-{
-
-}
 
 
 
