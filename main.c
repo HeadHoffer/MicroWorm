@@ -41,11 +41,10 @@
 
 
 
-//typedef char bool;
-/********************************
- main 
+typedef int bool;
+#define true 1
+#define false 0
 
- *******************************/
 int main(void)
 {
 	DDRD &= ~((1<<SW1)|(1<<SW2)|(1<<SW3)|(1<<SW4)|(1<<SW5));
@@ -58,88 +57,54 @@ int main(void)
 
 	lcd_clear();
 
-	
-	int aStartValue = 20;
-	int bStartValue = aStartValue + 10;
 	int speed = 10;
+	int x = 20;
+	int y = 20;
 
-	//PrintSquare(aStartValue, bStartValue);
-	//PrintCircle(40,40,12);
+	bool up,down,left,right = false;
+
+	int coords[2] = {x,y};
 
 	while(true)
 	{
-	
-	if(~Switch & (1<<SW1))
-	{
-		lcd_clear();
-		aStartValue += 10;
-		PrintSquare(aStartValue, bStartValue);
-	}
-
-	if(~Switch & (1<<SW3))
-	{
-		lcd_clear();
-		aStartValue -= 10;
-		PrintSquare(aStartValue, bStartValue);
-	}
-
-	if(~Switch & (1<<SW4))
-	{
-		lcd_clear();
-		bStartValue += 10;
-		PrintSquare(aStartValue, bStartValue);
-	}
-
-	if(~Switch & (1<<SW2))
-	{
-		lcd_clear();
-		bStartValue -= 10;
-		PrintSquare(aStartValue, bStartValue);
-	}
-
-	}
-
-	
-	
-	
-	// Testataan viivan piirtoa
-	//lcd_Line_vert(40, 40, 50); // proto Fungtio 
-	//lcd_Line_Hor(5, 5, 20);
-}
-
-void PrintSquare(int x, int y)
-{
-	// Piirtää näytölle "neliön" pikseli kerrallaan
-	for(int a = x; a < (x + 10); a++)
-	{
-		for(int b = y; b < (y + 10); b++)
+		if(~Switch & (1<<SW4))
 		{
-			lcd_pixel(a,b);
+			up = true;
+			down = left = right = false;
 		}
+		if(up)
+		{
+			Move(coords[1], 1);
+		}
+		PrintPixel(coords[0],coords[1]);
 	}
-	/*
-	for(int i = x; i < (x + 10); i++)
-	{
-		lcd_pixel(x,i);
-		lcd_pixel(i,x);
-	}
-	for(int j = y; j > (y - 10); j--)
-	{
-		lcd_pixel(y,j);
-		lcd_pixel(j,y);
-	}
-	*/
 }
 
-void PrintCircle(int x, int y, int radius)
+void PrintPixel(int x, int y)
 {
-	int iterations = 180;
-	float scaler = 1.3;
-
-	for(int i = 0; i < iterations; ++i)
-	{
-		float rad = (360.0 / iterations * i) * M_PI / 180.0;
-		lcd_pixel(
-			round(x + (cos(rad) * radius * scaler)), round(y + (sin(rad) * radius)));
-	}
+	lcd_clear();
+	lcd_pixel(x,y);
 }
+
+void Move(int coord, int moveValue)
+{
+	coord += moveValue;
+}
+
+void MoveDown()
+{
+
+}
+
+void MoveLeft()
+{
+
+}
+
+void MoveRight()
+{
+
+}
+
+
+
