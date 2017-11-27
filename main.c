@@ -29,7 +29,7 @@
 #include <avr/pgmspace.h>
 #include <stdio.h>
 #include <math.h>
-#include "lcd.h"
+#include "lcd_utils.h"
 #include <stdbool.h>
 
 //Portteihin kytketyt laitteet
@@ -51,14 +51,10 @@ int main(void)
 	// IO-port INIT
 	DDRA = 0xE0;
  
-	// LCD - Display Init
-	lcd_init();
-
-	lcd_clear();
-
+	LCD_Init_With_Flags(FLAG_LANDSCAPE | FLAG_IGNORE_WHITESPACE);
 	
-	int x = 20;
-	int y = 20;
+	int x = 30;
+	int y = 30;
 
 	bool up,down,left,right = false;
 
@@ -104,13 +100,14 @@ int main(void)
 		}
 		
 		PrintPixel(coords[0],coords[1]);
+		LCD_Display();
 	}
 }
 
 void PrintPixel(int x, int y)
 {
-	lcd_clear();
-	lcd_pixel(x,y);
+	LCD_Clear();
+	LCD_DrawPixel(x,y);
 }
 
 void Move(int *coord, int moveValue)

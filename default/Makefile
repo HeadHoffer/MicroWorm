@@ -37,7 +37,7 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 
 
 ## Objects that must be built in order to link
-OBJECTS = main.o lcd.o 
+OBJECTS = main.o lcd_utils.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
@@ -49,7 +49,7 @@ all: $(TARGET) disp.hex disp.eep disp.lss size
 main.o: ../main.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
-lcd.o: ../lcd.c
+lcd_utils.o: ../lcd_utils.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 ##Link
