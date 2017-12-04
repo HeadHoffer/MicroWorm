@@ -40,11 +40,13 @@
 #define SW4 PD3
 #define SW5 PD4
 
+
 #define GRID_WIDTH 64
 #define GRID_HEIGHT 32
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
+
 
 int main(void)
 
@@ -55,17 +57,17 @@ int main(void)
 	DDRA = 0xE0;
  
 	LCD_Init_With_Flags(FLAG_LANDSCAPE | FLAG_IGNORE_WHITESPACE);
-
+/*
 	int num_snake_cells = 5;
-	char snake[GRID_WIDTH * GRID_HEIGHT][2] = {
-		{ 20, 20 },
-		{ 19, 20 },
-		{ 18, 20 },
-		{ 17, 20 },
-		{ 16, 20 },
+	char snake[64 * 32][2] = {
+		{ 20, 30 },
+		{ 19, 30 },
+		{ 18, 30 },
+		{ 17, 30 },
+		{ 16, 30 },
 	};
 	char food[2];
-
+*/
 	bool up,down,left,right = false;
 
 	DrawBox();
@@ -92,7 +94,7 @@ int main(void)
 			down = true;
 			up = left = right = false;
 		}
-
+/*
 		if(up)
 		{
 			Move(snake, &num_snake_cells, 0);
@@ -110,11 +112,15 @@ int main(void)
 			Move(snake, &num_snake_cells, 3);
 		}
 		
-		DrawSnake(snake, num_snake_cells);
+		DrawSnake(snake, num_snake_cells);*/
+		for(int i = 20; i < 30; i++)
+		{
+		LCD_DrawPixel(20,i);
+		}
 		LCD_Display();
 	}
 }
-
+/*
 void Move(char **snake, int *num_snake_cells, char direction)
 {
 	char new_pos[2];
@@ -146,6 +152,7 @@ void Move(char **snake, int *num_snake_cells, char direction)
 	snake[0][1] = new_pos[1];
 }
 
+
 void DrawSnake(char **snake, int num_snake_cells)
 {
 	LCD_ClearArea(1,1,126,62);
@@ -154,12 +161,12 @@ void DrawSnake(char **snake, int num_snake_cells)
 	for(i = 0; i < num_snake_cells; i++) {
 		int x = snake[i][0];
 		int y = snake[i][1];
-		int screen_x = x * (SCREEN_WIDTH / GRID_WIDTH);
-		int screen_y = y * (SCREEN_HEIGHT / GRID_HEIGHT);
-		LCD_FillRect(screen_x, screen_y, screen_x + (SCREEN_WIDTH / GRID_WIDTH), screen_y + (SCREEN_HEIGHT / GRID_HEIGHT));
+		int screen_x = x * 2;
+		int screen_y = y * 2;
+		LCD_FillRect(screen_x, screen_y, screen_x + 2, screen_y + 2);
 	}
 }
-
+*/
 void DrawBox()
 {
 	LCD_DrawLine(0,0,128,0); //bottom
